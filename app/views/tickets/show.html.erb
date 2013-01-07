@@ -2,6 +2,7 @@
 	<h2><%= @ticket.title %></h2>
 	<%= simple_format(@ticket.description) %>
 </div>
+<br><small>Created by <%= @ticket.user.nil? ? 'Unknown User' : @ticket.user.email %></small>
 
 <%= link_to "Edit Ticket", [:edit, @project, @ticket] %>
 <%= link_to "Delete Ticket", [@project, @ticket], :method => :delete, :confirm => 'Are you sure?' %>
