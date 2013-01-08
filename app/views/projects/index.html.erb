@@ -2,8 +2,10 @@
 
 <ul>
 	<% @projects.each do |project| %>
-		<li><%= link_to project.name, project %></li>
+		<li><%= link_to project.name, project %> - <%= pluralize(project.tickets.count, 'ticket') %></li>
 	<% end %>
 </ul>		
-		
-<%= link_to "New Project", new_project_path %>
+<br />
+<% admin_only do %>
+	<%= link_to "New Project", new_project_path %>
+<% end %>

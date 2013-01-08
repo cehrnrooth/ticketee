@@ -16,7 +16,11 @@
 	
 <nav>
 	<% if user_signed_in? %>
-		Signed in as <%= current_user.email %>
+		<% admin_only do %>
+			<%= link_to "Admin Control", admin_root_path %> | 
+		<% end %>
+		Signed in as <%= current_user.email %> |
+		<%= link_to "Sign Out", destroy_user_session_path, :method => :delete %>
 	<% else %>
 		<%= link_to "Sign Up", new_user_registration_path %> |
 		<%= link_to "Sign In", new_user_session_path %>
@@ -33,4 +37,7 @@
 <%= yield %>
 
 </body>
+<footer style="margin-top:50px; background: #eee; padding:10px; -webkit-border-radius:5px; font-size: 0.8em;">
+	<%= params.inspect %>
+</footer>
 </html>
