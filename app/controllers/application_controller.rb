@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_filter :find_states
   protect_from_forgery
   
 private
@@ -8,6 +9,10 @@ private
       flash[:alert] = "You must be an admin to access that."
       redirect_to root_path
     end
+  end
+  
+  def find_states
+    @states = State.all
   end
   
 end

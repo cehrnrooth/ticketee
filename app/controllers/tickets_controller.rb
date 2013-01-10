@@ -14,7 +14,12 @@ class TicketsController < ApplicationController
   def create
     @ticket = @project.tickets.build(params[:ticket])
     @ticket.user = current_user
+    @ticket.state = State.find_by_default(true)
     if @ticket.save
+      if can?(:tag, @ticket.project) || current_user.admin?
+        @ticket.tag!(params[:tags])
+      end
+      
       flash[:notice] = "Ticket created!"
       redirect_to [@project, @ticket]
     else
@@ -24,6 +29,8 @@ class TicketsController < ApplicationController
   end
   
   def show
+    @comment = @ticket.comments.build
+    @states = State.all
   end
   
   def edit
@@ -42,6 +49,11 @@ class TicketsController < ApplicationController
   def destroy
     @ticket.destroy
     redirect_to @project
+  end
+  
+  def search
+    @tickets = @project.tickets.search(params[:search])
+    render "projects/show"
   end
   
 private

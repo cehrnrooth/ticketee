@@ -1,6 +1,6 @@
 <h2>Projects</h2>
 
-<ul>
+<ul id="projects">
 	<% @projects.each do |project| %>
 		<li><%= link_to project.name, project %> - <%= pluralize(project.tickets.count, 'ticket') %></li>
 	<% end %>
